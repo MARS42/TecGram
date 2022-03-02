@@ -32,4 +32,3 @@ class User:
             
 
 
-print(User().CheckInput('18680060@cuautla.tecnm.mx','18680060'))
