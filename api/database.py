@@ -16,7 +16,16 @@ class database:
             }
     firebase=pyrebase.initialize_app(firebaseConfig)
     auth=firebase.auth()
- 
+
+    def SignIn(self,email,password):
+        user = self.auth.sign_in_with_email_and_password(email, password)
+        data=self.auth.get_account_info(user['idToken'])
+        if (data['users'][0]['emailVerified'])==False:
+
+            self.verifyEmail (user['idToken'])
+            return "Email is not verified please check your email"
+
+        return user
     def signup(self,email,password,data):
         try:
             user=self.auth.create_user_with_email_and_password(email,password)

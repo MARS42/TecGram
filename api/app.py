@@ -14,6 +14,12 @@ def SignIn():
         result=user.User().GetData(data)
         return jsonify({'response':result})
     return jsonify({'response':'Error request was not allowed'})
-
+@app.route('/login', methods=['POST'])
+def LogIn():
+    if request.method=="POST":
+        data=request.get_json()
+        result=user.User().LogIn(data)
+        return jsonify({'response':result})
+    return jsonify({'response':'Error request was not allowed'})
 if __name__ =='__main__':
     app.run(debug=True)

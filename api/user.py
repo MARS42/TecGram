@@ -4,20 +4,33 @@ import database
 import attributes
 
 class User:
+    mensaje=""
+    def LogIn(self,json):
+        if attributes.attributes().ValidateAttributes(json,['email','password']):
+            if self.CheckEmailPassword(json['email'],json['password'])==True:
+                return database.database().SignIn(json['email'],json['password'])
+
+        return self.mensaje
+
     def GetData(self,json):
         result=attributes.attributes().ValidateAttributes(json,['email','password','data'])
         if result==True:
             return self.CheckInput(json['email'],json['password'],json['data'])
-        return 'Error You have to declared email, password and data'
+            
+        else:
+            self.mensaje='Error You have to declared email, password and data'
+        return self.mensaje
 
     def ValidateEmailPasswordUser(self,email,password):
         if self.CheckEmailAdress(email):
             if self.CheckPassword(password):
                 return True
             else:
-                return "Password is not valid"
+                self.mansaje="Password is not valid"
         else:
-            return "Email adress is invalid"
+            self.mensaje= "Email adress is invalid"
+
+        return False
         
         
     def CheckEmailAdress(self,email):
@@ -27,40 +40,41 @@ class User:
         
     def CheckPassword(self,password):
         return len(password)>=8
-            
-    def CheckInput(self,user,password,data):
+    
+    def CheckEmailPassword(self,user,password):
         St=CheckInputs.CheckString()
         if St.check_string(user) and St.check_string(password):
-            result=self.ValidateEmailPasswordUser(user,password)
-            if result==True:
-                r= self.CheckDataRequired(data)
-                if r==True:
-                    return database.database().signup(user,password,data)
-                return r
+            if self.ValidateEmailPasswordUser(user,password)==True:
+                return True
+        self.mensaje="Error email and password can not be empity"
+        return False
 
-            else:
-                return result
-        return "Error inputs are not allowed"
-    
+    def CheckInput(self,user,password,data):
+        if self.CheckEmailPassword(user,password)==True:
+            if self.CheckDataRequired(data)==True:
+                database.database().signup(user,password,data)
+                return 'User added'
 
-
-    
+        return self.mensaje
+        
     def CheckDataRequired(self,data):
-        mensaje="User added"
+        
         if attributes.attributes().ValidateAttributes(data,['name','rol']):
             #check the rol and change the required data
             if data['rol']=='student':
-                mensaje=student().CheckStudent(data)
+                self.mensaje=student().CheckStudent(data)
+                return True
             elif data['rol']=='teacher':
-                mensaje=teacher().CheckTeacher(data)
+                self.mensaje=teacher().CheckTeacher(data)
+                return True
                 
             elif data['rol']=="office":
                 return True
             else:
-                mensaje="Rol is not in the list"
+                self.mensaje="Rol is not in the list"
         else :
-            mensaje="Name and rol must be declared"
-        return mensaje
+            self.mensaje="Name and rol must be declared"
+        return False
 
 class person:
     mensaje=""
