@@ -5,6 +5,21 @@ import attributes
 
 class User:
     mensaje=""
+    def UserLike(self,name,lastname,username):
+        #to lower to comparate
+        name=name.lower()
+        lastname=lastname.lower()
+        username=username.lower()
+        full_name=name+" "+lastname
+        pattern=re.compile(username)
+        return pattern.search(name) or pattern.search(lastname) or pattern.search(full_name)
+
+
+    def SearchUserByName(self,json):
+        if attributes.attributes().ValidateAttributes(json,['idToken','username']):
+            return database.database().SearchByName(json['username'],json['idToken'])
+            
+
     def LogIn(self,json):
         if attributes.attributes().ValidateAttributes(json,['email','password']):
             if self.CheckEmailPassword(json['email'],json['password'])==True:

@@ -21,5 +21,13 @@ def LogIn():
         result=user.User().LogIn(data)
         return jsonify({'response':result})
     return jsonify({'response':'Error request was not allowed'})
+
+@app.route('/searchuser')
+def searchuser():
+    if request.method=="GET":
+        data=request.get_json()
+        return jsonify({'response':user.User().SearchUserByName(data)})      
+    return jsonify({'response':'Error request was not allowed'})
+    
 if __name__ =='__main__':
     app.run(debug=True)
