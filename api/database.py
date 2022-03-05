@@ -1,8 +1,9 @@
 import pyrebase
 import os
 import requests
+#from firebase import firebase 
 
-class fire_base:
+class database:
     firebaseConfig={
             "apiKey": os.environ.get('apiKey'),
             "authDomain": os.environ.get('authDomain'),
@@ -16,13 +17,20 @@ class fire_base:
     firebase=pyrebase.initialize_app(firebaseConfig)
     auth=firebase.auth()
  
-    def signup(self,email,password):
+    def signup(self,email,password,data):
         try:
             user=self.auth.create_user_with_email_and_password(email,password)
             self.verifyEmail (user['idToken'])
+            data['localId']=user['localId']
+            self.SignupUser(data)
             return user
         except:
             return 'Email already exists'
+    
+    def SignupUser(self,data):
+        db =self.firebase.database()
+        db.child("users").push(data)
+        
     def verifyEmail(self,token):
         headers = {
         'Content-Type': 'application/json',

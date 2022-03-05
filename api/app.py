@@ -11,8 +11,9 @@ def index():
 def SignIn():
     if request.method=="POST":
         data=request.get_json()
-        result=user.User().CheckInput(data['user'],data['password'])
+        result=user.User().GetData(data)
         return jsonify({'response':result})
     return jsonify({'response':'Error request was not allowed'})
+
 if __name__ =='__main__':
     app.run(debug=True)
