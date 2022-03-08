@@ -34,7 +34,9 @@ class _LoginPageState extends State<LoginPage> {
               children: [
                 crearCampo(etiqueta: "Correo", context: context, controller: controllerEmail),
                 crearCampo(etiqueta: "Contraseña", ocultable: true, context: context, controller: controllerPassword),
-                MaterialButton(onPressed:  () => verificarFormulario(_formulario, context))
+                MaterialButton(
+                    child: Text("Ingresar"),
+                    onPressed:  () => verificarFormulario(_formulario, context))
               ],
                 )
                 : CupertinoActivityIndicator(radius: 20,),
@@ -58,9 +60,9 @@ class _LoginPageState extends State<LoginPage> {
       if (res != "ok") {
         ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(content: Text("Contreña o usuario inválidos"),
-          duration: Duration(seconds: 2),
+          duration: Duration(seconds: 5),
           behavior: SnackBarBehavior.floating,
-          padding: EdgeInsets.all(4.0),)
+          padding: EdgeInsets.all(8.0),)
         );
       } else {
         Navigator.pushReplacementNamed(
