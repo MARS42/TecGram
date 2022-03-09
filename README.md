@@ -4,10 +4,11 @@ This is a social media app like instagram for students of ITC
 - [Backend 🖥️](https://github.com/dlowTux/TecGram/tree/backend#backend-%EF%B8%8F)
 - [Install](https://github.com/dlowTux/TecGram/tree/backend#install)
   - [Docker (Linux) 🐳](https://github.com/dlowTux/TecGram/tree/backend#docker-linux-)
-  - [Development Setup 🐧](https://github.com/dlowTux/TecGram/tree/backend#development-setup-)
+  - [Development Setup 🐧 Linux](https://github.com/dlowTux/TecGram/tree/backend#development-setup-)
     - [Dependencies](https://github.com/dlowTux/TecGram/tree/backend#dependencies)
     - [Local setup 🏘️](https://github.com/dlowTux/TecGram/tree/backend#local-setup-%EF%B8%8F)
-    - [Run the server 🏃](https://github.com/dlowTux/TecGram/tree/backend#run-the-server-)
+    - [Run the server 🏃(Docker)](https://github.com/dlowTux/TecGram/tree/backend#run-the-server-docker)
+    - [Run the server 🏃 (Linux)](https://github.com/dlowTux/TecGram/tree/backend#run-the-server-)
 - [How to use it?](https://github.com/dlowTux/TecGram/tree/backend#how-to-use-it)
   - [Sign In ☕](https://github.com/dlowTux/TecGram/tree/backend#sign-in-)
   - [Data required](https://github.com/dlowTux/TecGram/tree/backend#data-required)
@@ -39,7 +40,12 @@ export messagingSenderId=""
 export appId=""
 export measurementId=""
 ```
-## Development Setup 🐧
+Build your docker image ⚠️ NOTICE YOU HAVE TO RUN THIS COMMAND EVERY DOCKERFILE CHANGES ⚠️
+
+```
+docker build -t "tecgram" .
+```
+## Development Setup (Linux) 🐧
 ### Dependencies
 ```
 pip install pyrebase flask
@@ -57,13 +63,9 @@ export appId=""
 export measurementId=""
 
 ```
-Build your docker image ⚠️ NOTICE YOU HAVE TO RUN THIS COMMAND EVERY DOCKERFILE CHANGES ⚠️
 
-```
-docker build -t "tecgram" .
-```
 
-### Run the server (Docker)
+### Run the server (Docker)🏃
 ```
 docker run  -it --publish 5000:5000 tecgram
 ```
