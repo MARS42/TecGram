@@ -10,8 +10,8 @@ class Session {
   final key =
       "iklowdklwhfksfjhaikoslfhwajklfhasfkljhaskflhnfjawhgfjklaefhbikuefgefg";
 
-  set(String token) async {
-    final data = {"token": token};
+  set(dynamic data) async {
+    //final data = {"token": token};
     await storage.write(key: key, value: jsonEncode(data));
   }
 

@@ -29,7 +29,7 @@ class auth {
           return 'ok';
         }
       } else {
-        await session.set(perfil["response"]["idToken"]);
+        await session.set(perfil["response"]);
         return 'ok';
       }
 
