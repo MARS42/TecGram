@@ -1,4 +1,3 @@
-flask
-flask-restplus
-Werkzeug==0.16.1
-mongoengine
+flask==2.0.3
+pyrebase==3.0.27
+
