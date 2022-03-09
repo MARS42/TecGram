@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
-import 'package:tecgram_app/api/Auth.dart';
+import 'package:tecgram_app/api/auth.dart';
 import 'package:tecgram_app/pages/singup_page.dart';
 
 /// Página de Login y registro
@@ -60,8 +60,8 @@ class _LoginPageState extends State<LoginPage> {
       setState(() {
         cargando = true;
       });
-      final auth = Auth();
-      final res = await auth.login(controllerEmail.text, controllerPassword.text);
+      final authentication = auth();
+      final res = await authentication.login(controllerEmail.text, controllerPassword.text);
       setState(() {
         cargando = false;
       });
