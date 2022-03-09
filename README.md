@@ -27,7 +27,17 @@ This is the backend for the app follow the instructions for set up the aplicatio
 # Install
 You can set up the application using docker (recommended) or manual
 ## Docker (Linux) 🐳
+First, set the correct value for variables in .env
+
 ```
+export apiKey=""
+export authDomain=""
+export databaseURL=""
+export projectId=""
+export storageBucket=""
+export messagingSenderId=""
+export appId=""
+export measurementId=""
 ```
 ## Development Setup 🐧
 ### Dependencies
@@ -47,7 +57,17 @@ export appId=""
 export measurementId=""
 
 ```
-### Run the server 🏃
+Build your docker image ⚠️ NOTICE YOU HAVE TO RUN THIS COMMAND EVERY DOCKERFILE CHANGES ⚠️
+
+```
+docker build -t "tecgram" .
+```
+
+### Run the server (Docker)
+```
+docker run  -it --publish 5000:5000 tecgram
+```
+### Run the server (Linux)🏃
 ```
 python3 api/app.py
 ```
