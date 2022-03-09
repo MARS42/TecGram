@@ -1,6 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import 'package:tecgram_app/api/Auth.dart';
+import 'package:tecgram_app/pages/singup_page.dart';
 
 /// Página de Login y registro
 class LoginPage extends StatefulWidget {
@@ -23,26 +25,33 @@ class _LoginPageState extends State<LoginPage> {
 
     return Scaffold(
       appBar: AppBar(title: Text("TecGram"),),
-      body: Column(
-        children: [
-          Text("¡Hola de nuevo!"),
-          Text("Accede a tu cuenta"),
-          Form(
-            key: _formulario,
-            child: !cargando
-                ? Column(
-              children: [
-                crearCampo(etiqueta: "Correo", context: context, controller: controllerEmail),
-                crearCampo(etiqueta: "Contraseña", ocultable: true, context: context, controller: controllerPassword),
-                MaterialButton(
-                    child: Text("Ingresar"),
-                    onPressed:  () => verificarFormulario(_formulario, context))
-              ],
-                )
-                : CupertinoActivityIndicator(radius: 20,),
-          )
-        ],
-      )
+      body: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            Text("Accede a tu cuenta", style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold)),
+            Form(
+              key: _formulario,
+              child: !cargando
+                  ? Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  crearCampo(etiqueta: "Correo", context: context, controller: controllerEmail),
+                  crearCampo(etiqueta: "Contraseña", ocultable: true, context: context, controller: controllerPassword),
+                  ElevatedButton(
+                      child: Text("Ingresar"),
+                      onPressed: ()  => verificarFormulario(_formulario, context)
+                  ),
+                  OutlinedButton(onPressed: () => registrarse(context), child: Text('No tengo cuenta'))
+                ],
+                  )
+                  : CupertinoActivityIndicator(radius: 20,),
+            )
+          ],
+        ),
+      ),
     );
   }
 
@@ -70,24 +79,40 @@ class _LoginPageState extends State<LoginPage> {
       }
     }
   }
+
+  void registrarse(BuildContext context){
+    Navigator.push(context, MaterialPageRoute(builder: (context) => const SignUpPage()));
+  }
 }
 
+/// Crear un campo de texto
 Widget crearCampo(
     { etiqueta,
       ocultable = false,
       required BuildContext context,
       required TextEditingController controller }) {
-  return Column(
-    children: [
-      Text(etiqueta),
-      TextFormField(
-        validator: (value) {
-          if(value != null && value.isEmpty)
-            return etiqueta + ' está vacío';
-        },
-        controller: controller,
-        obscureText: ocultable,
-      )
-    ],
+  return Padding(
+    padding: const EdgeInsets.all(8.0),
+    child: Column(
+      mainAxisAlignment: MainAxisAlignment.start,
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        TextFormField(
+          validator: (value) {
+            if(value != null && value.isEmpty)
+              return 'Es necesario este campo';
+          },
+          controller: controller,
+          obscureText: ocultable,
+          decoration: InputDecoration(
+            border: const OutlineInputBorder(),
+            labelText: etiqueta,
+            labelStyle: const TextStyle(
+              fontSize: 16,
+            )
+          ),
+        )
+      ],
+    ),
   );
 }
