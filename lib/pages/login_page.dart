@@ -68,10 +68,10 @@ class _LoginPageState extends State<LoginPage> {
 
       if (res != "ok") {
         ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text("Contreña o usuario inválidos"),
-          duration: Duration(seconds: 5),
+          SnackBar(content: Text("Correo o contraseña no válidos"),
+          duration: const Duration(seconds: 5),
           behavior: SnackBarBehavior.floating,
-          padding: EdgeInsets.all(8.0),)
+          padding: const EdgeInsets.all(8.0),)
         );
       } else {
         Navigator.pushReplacementNamed(

@@ -5,9 +5,11 @@ import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 save it into a storage with a key
  */
 class Session {
+  
   final storage = FlutterSecureStorage();
   final key =
       "iklowdklwhfksfjhaikoslfhwajklfhasfkljhaskflhnfjawhgfjklaefhbikuefgefg";
+
   set(String token) async {
     final data = {"token": token};
     await storage.write(key: key, value: jsonEncode(data));
