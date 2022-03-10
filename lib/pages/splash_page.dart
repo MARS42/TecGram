@@ -36,7 +36,7 @@ class _SplashPageState extends State<SplashPage> {
     }
 
     // Si no se cumplió la condición, se navega a la ruta de Home
-    Navigator.pushReplacementNamed(context, 'home');
+    Navigator.pushReplacementNamed(context, 'home', arguments: _data);
   }
 
   /// La vista del widget solo mostrará un simbolo de carga

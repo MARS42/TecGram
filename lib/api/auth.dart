@@ -26,14 +26,14 @@ class auth {
 
       if (responseType == 'String') {
         if (respuesta.statusCode == 200 && !loginError(perfil["response"])) {
-          return 'ok';
+          return ['ok'];
         }
       } else {
         await session.set(perfil["response"]);
-        return 'ok';
+        return ['ok', perfil["response"]];
       }
 
-      return perfil['response'];
+      return ['', perfil['response']];
     } catch (e) {
       print("try: " + e.toString());
     }

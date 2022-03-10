@@ -66,7 +66,7 @@ class _LoginPageState extends State<LoginPage> {
         cargando = false;
       });
 
-      if (res != "ok") {
+      if (res[0] != "ok") {
         ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(content: Text("Correo o contraseña no válidos"),
           duration: Duration(seconds: 5),
@@ -75,7 +75,7 @@ class _LoginPageState extends State<LoginPage> {
         );
       } else {
         Navigator.pushReplacementNamed(
-            context, "home");
+            context, "home", arguments: res[1]);
       }
     }
   }

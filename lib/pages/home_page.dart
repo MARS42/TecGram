@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:tecgram_app/pages/home/account_view.dart';
+import 'package:tecgram_app/session/session.dart';
 
 /// Página principal de la aplicación
 class HomePage extends StatefulWidget {
@@ -9,6 +11,7 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
+  dynamic session;
   int _viewIndex = 0;
   late TabController tabController;
 
@@ -19,22 +22,25 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
     });
   }
 
-  static const List<Widget> _vistas = [
-    Text("Inicio"),
-    Text("Buscar"),
-    Text("Perfil")
-  ];
+  final List<Widget> _vistas = [];
 
   @override
-  void initState() {
-    super.initState();
+  void didChangeDependencies() {
+    // TODO: implement didChangeDependencies
+    super.didChangeDependencies();
+
+    session = ModalRoute.of(context)!.settings.arguments;
+
+    _vistas.add(Text("Inicio"));
+    _vistas.add(Text("Buscar"));
+    _vistas.add(AccountView(session: session));
+
     tabController = TabController(
       initialIndex: 0,
       length: _vistas.length,
       vsync: this,
     );
   }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -46,17 +52,24 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
               pinned: true,
               floating: true,
               bottom: AppBar(
-                title: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    const Text("Tecgram"),
-                    Row(children: [
-                      IconButton(icon: const Icon(Icons.favorite_outline_rounded), onPressed: () {},),
-                      IconButton(icon: const Icon(Icons.mail_outlined), onPressed: () {},)
-                    ],)
+                  title: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  const Text("Tecgram"),
+                  Row(
+                    children: [
+                      IconButton(
+                        icon: const Icon(Icons.favorite_outline_rounded),
+                        onPressed: () {},
+                      ),
+                      IconButton(
+                        icon: const Icon(Icons.mail_outlined),
+                        onPressed: () {},
+                      )
                     ],
                   )
-                ),
+                ],
+              )),
             ),
           ];
         },
@@ -76,11 +89,13 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
         selectedItemColor: Colors.indigo,
         onTap: cambiarVista,
       ),
-      floatingActionButton: FloatingActionButton(
-        child: const Icon(Icons.post_add),
-        onPressed: () {},
-        tooltip: "Nuevo post",
-      ),
+      floatingActionButton: _viewIndex == 0
+          ? FloatingActionButton(
+              child: const Icon(Icons.post_add),
+              onPressed: () {},
+              tooltip: "Nuevo post",
+            )
+          : null,
     );
   }
 }
