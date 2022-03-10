@@ -24,14 +24,14 @@ class _LoginPageState extends State<LoginPage> {
   Widget build(BuildContext context) {
 
     return Scaffold(
-      appBar: AppBar(title: Text("TecGram"),),
+      appBar: AppBar(title: const Text("TecGram"),),
       body: Padding(
         padding: const EdgeInsets.all(8.0),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            Text("Accede a tu cuenta", style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold)),
+            const Text("Accede a tu cuenta", style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold)),
             Form(
               key: _formulario,
               child: !cargando
@@ -41,13 +41,13 @@ class _LoginPageState extends State<LoginPage> {
                   crearCampo(etiqueta: "Correo", context: context, controller: controllerEmail),
                   crearCampo(etiqueta: "Contraseña", ocultable: true, context: context, controller: controllerPassword),
                   ElevatedButton(
-                      child: Text("Ingresar"),
+                      child: const Text("Ingresar"),
                       onPressed: ()  => verificarFormulario(_formulario, context)
                   ),
                   OutlinedButton(onPressed: () => registrarse(context), child: Text('No tengo cuenta'))
                 ],
                   )
-                  : CupertinoActivityIndicator(radius: 20,),
+                  : const CupertinoActivityIndicator(radius: 20,),
             )
           ],
         ),
@@ -68,10 +68,10 @@ class _LoginPageState extends State<LoginPage> {
 
       if (res != "ok") {
         ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text("Correo o contraseña no válidos"),
-          duration: const Duration(seconds: 5),
+          const SnackBar(content: Text("Correo o contraseña no válidos"),
+          duration: Duration(seconds: 5),
           behavior: SnackBarBehavior.floating,
-          padding: const EdgeInsets.all(8.0),)
+          padding: EdgeInsets.all(8.0),)
         );
       } else {
         Navigator.pushReplacementNamed(
