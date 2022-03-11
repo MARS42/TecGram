@@ -89,6 +89,11 @@ class database:
     def SignupUser(self,data):
         data['following']=[0]
         data['followers']=[0]
+
+        if data['rol']=="office":
+            data['profile']="public"
+        else:
+            data['profile']="private"
         data['requests']=[0]
         data['photo']="https://firebasestorage.googleapis.com/v0/b/tecgram-d61ad.appspot.com/o/user.png?alt=media&token=e4f489a7-f79f-43bf-9e15-daee3eaf031e"
         db =self.firebase.database()
