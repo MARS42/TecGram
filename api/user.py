@@ -5,6 +5,11 @@ import attributes
 
 class User:
     mensaje=""
+    def refreshToken(self,json):
+        if attributes.attributes().TestAttribute(json,'refreshToken'):
+            return database.database().freshToken(json['refreshToken'])
+        return "You missed the refreshToken"
+        
     def UserLike(self,name,lastname,username):
         #to lower to comparate
         name=name.lower()

@@ -28,6 +28,12 @@ def searchuser():
         data=request.get_json()
         return jsonify({'response':user.User().SearchUserByName(data)})      
     return jsonify({'response':'Error request was not allowed'})
+
+@app.route('/refreshtoken', methods=['POST'])
+def freshtoken():
+    if request.method=="POST":
+        data=request.get_json()
+        return  jsonify({'response':user.User().refreshToken(data)})
     
 if __name__ =='__main__':
     app.run(debug=True,host="0.0.0.0", port=5000)

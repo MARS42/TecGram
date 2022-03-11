@@ -18,24 +18,37 @@ class database:
     firebase=pyrebase.initialize_app(firebaseConfig)
     auth=firebase.auth()
 
+    def freshToken(self,refreshToken):
+        try:
+            user = self.auth.refresh(refreshToken)
+            return user['idToken']
+        except:
+            return "refreshToken token is not valid"
+
     def SearchByName(self,name,idToken):
         person=[]
         if self.CheckToken(idToken):
             db =self.firebase.database()
             users_by_name = db.child("users").get()
-            for user_ in users_by_name.each():
-                client=user_.val()
-                #check if there is a lastname
-                if client['rol'] in ['student','teacher']:
-                    if user.User().UserLike(client['name'],client['lastname'],name):
-                        person.append(client)
-                else:
-                    if user.User().UserLike(client['name'],"---",name):
-                        person.append(client)
+            if users_by_name !=None:
+                person=self.serach_by_name(users_by_name,name)
             
             return person
 
         return "Your token has expired"
+
+    def serach_by_name(self,user_collection,name):
+        person=[]
+        for user_ in user_collection.each():
+            client=user_.val()
+            #check if there is a lastname
+            if client['rol'] in ['student','teacher']:
+                if user.User().UserLike(client['name'],client['lastname'],name):
+                    person.append(client)
+                else:
+                    if user.User().UserLike(client['name'],"---",name):
+                        person.append(client)
+        return person
 
     def UserLike(self,name,lastname,username):
         #to lower to comparate
@@ -74,6 +87,10 @@ class database:
             return 'Email already exists'
     
     def SignupUser(self,data):
+        data['following']=[0]
+        data['followers']=[0]
+        data['requests']=[0]
+        data['photo']="https://firebasestorage.googleapis.com/v0/b/tecgram-d61ad.appspot.com/o/user.png?alt=media&token=e4f489a7-f79f-43bf-9e15-daee3eaf031e"
         db =self.firebase.database()
         db.child("users").push(data)
         
