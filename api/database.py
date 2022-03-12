@@ -18,6 +18,60 @@ class database:
     firebase=pyrebase.initialize_app(firebaseConfig)
     auth=firebase.auth()
 
+    def GenerateRequest(self,idlocal,personidlocal,idToken):
+        if self.CheckToken(idToken):
+            response=self.sendresquest(idlocal,personidlocal)
+            if response==False:
+                return "Couldn't send your follow requests"
+            else:
+                return "Follow requests sended"
+        return "Your token has expired"
+
+
+    def sendresquest(self,idlocal,personidlocal):
+        person=[]
+        sender=None
+        db =self.firebase.database()
+        users_by_id = db.child("users").get()
+        for user in users_by_id.each():
+            user_=user.val()
+            if user_['localId']==personidlocal:
+                person.append(user.val())
+                person.append(user.key())
+            elif user_['localId']==idlocal:
+                sender =user.key()
+
+        self.checkprofilesetting(person,sender)
+        return self.Update_Request(person)
+
+    def Update_Request(self,person):
+        try:
+            db =self.firebase.database()
+            db.child("users").child(person[1]).set(person[0])
+        except:
+            return False
+        return True
+
+    def checkprofilesetting(self,person,sender):
+        if person[0]["profile"]=="private":
+            self.SaveRequest(person,sender)
+        else:
+            #add as follower
+            self.AceptFollowigRequest(person,sender)
+            pass
+
+    def AceptFollowigRequest(self,person,sender):
+        if person[0]["followers"][0]==0:
+            person[0]["followers"]=[sender]
+        else:
+            person[0]["followers"].append(sender)
+
+    def SaveRequest(self,person,sender):
+        if person[0]["requests"][0]==0:
+            person[0]["requests"]=[sender]
+        else:
+            person[0]["requests"].append(sender)
+
     def freshToken(self,refreshToken):
         try:
             user = self.auth.refresh(refreshToken)
@@ -109,3 +163,5 @@ class database:
             return {'status':'error','message':r.json()['error']['message']}
         if 'email' in r.json().keys():
             return {'status':'success','email':r.json()['email']}
+
+

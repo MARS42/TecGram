@@ -5,6 +5,12 @@ import attributes
 
 class User:
     mensaje=""
+
+    def SendRequest(self,json):
+        if attributes.attributes().ValidateAttributes(json,['idToken',"localId","personidlocal"]):
+            return database.database().GenerateRequest(idToken=json["idToken"],idlocal=json["localId"],personidlocal=json["personidlocal"])
+        return "Error you missed some data idtoken and localId personidlocal are required"
+
     def refreshToken(self,json):
         if attributes.attributes().TestAttribute(json,'refreshToken'):
             return database.database().freshToken(json['refreshToken'])

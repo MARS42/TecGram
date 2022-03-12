@@ -34,6 +34,11 @@ def freshtoken():
     if request.method=="POST":
         data=request.get_json()
         return  jsonify({'response':user.User().refreshToken(data)})
-    
+
+@app.route('/sendresquest',methods=["POST"])
+def sendresquest():
+    if request.method=="POST":
+        data=request.get_json()
+        return jsonify({'response':user.User().SendRequest(data)})
 if __name__ =='__main__':
     app.run(debug=True,host="0.0.0.0", port=5000)
