@@ -4,4 +4,4 @@ COPY . /code
 RUN pip install -r requirements.txt
  
 ENV PORT 5000
-CMD [ "python", "api/app.py" ]
+CMD [ "python", "main.py" ]
