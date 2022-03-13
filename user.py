@@ -6,9 +6,13 @@ import attributes
 class User:
     mensaje=""
     
+    def GetRequest(self,json):
+        if attributes.attributes().ValidateAttributes(json,['localId',"idToken"]):
+            return database.database().GetRequestByIdLocal(json['localId'],json['idToken'])
+        return "You miss some data"
     def AcceptRequest(self,json):
-        if attributes.attributes().ValidateAttributes(json,["idlocal","response","idrequest","idToken"]):
-            return database.database().AcceptDeleteRequest(json["idToken"],json['idlocal'],json ["response"],json["idrequest"])
+        if attributes.attributes().ValidateAttributes(json,["localId","response","idrequest","idToken"]):
+            return database.database().AcceptDeleteRequest(json["idToken"],json['localId'],json ["response"],json["idrequest"])
         return "You missed some data check the documentation"
 
     def SendRequest(self,json):

@@ -18,6 +18,20 @@ class database:
     firebase=pyrebase.initialize_app(firebaseConfig)
     auth=firebase.auth()
 
+    def GetRequestByIdLocal(self,localId,idtoken):
+        if self.CheckToken(idtoken):
+            return self.GetRequest(localId)
+        return "Your Token is expired"
+
+    def GetRequest(self,localId):
+        db =self.firebase.database()
+        users_by_id = db.child("users").get()
+        for user in users_by_id.each():
+            user_=user.val()
+            if user_['localId']==localId:
+                return user_["requests"]
+
+
     def AcceptDeleteRequest(self,idtoken,idlocal,response,idrequest):
         if self.CheckToken(idtoken):
             return self.AcceptRequest(idlocal,response,idrequest)
