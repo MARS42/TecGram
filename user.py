@@ -5,6 +5,11 @@ import attributes
 
 class User:
     mensaje=""
+    
+    def AcceptRequest(self,json):
+        if attributes.attributes().ValidateAttributes(json,["idlocal","response","idrequest","idToken"]):
+            return database.database().AcceptDeleteRequest(json["idToken"],json['idlocal'],json ["response"],json["idrequest"])
+        return "You missed some data check the documentation"
 
     def SendRequest(self,json):
         if attributes.attributes().ValidateAttributes(json,['idToken',"localId","personidlocal"]):

@@ -40,5 +40,12 @@ def sendresquest():
     if request.method=="POST":
         data=request.get_json()
         return jsonify({'response':user.User().SendRequest(data)})
+
+@app.route('/acceptrequest',methods=["POST"])
+def AcceptRequest():
+    if request.method=="POST":
+        json=request.get_json()
+        response=user.User().AcceptRequest(json)
+        return jsonify({'response':response})
 if __name__ =='__main__':
     app.run(debug=True,host="0.0.0.0", port=5000)

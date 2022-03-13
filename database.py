@@ -18,6 +18,59 @@ class database:
     firebase=pyrebase.initialize_app(firebaseConfig)
     auth=firebase.auth()
 
+    def AcceptDeleteRequest(self,idtoken,idlocal,response,idrequest):
+        if self.CheckToken(idtoken):
+            return self.AcceptRequest(idlocal,response,idrequest)
+        return "Your token is expired"
+
+    def AcceptRequest(self,idlocal,response,idrequest):
+        db =self.firebase.database()
+        users_by_id = db.child("users").get()
+        for user in users_by_id.each():
+            user_=user.val()
+            if user_['localId']==idlocal:
+                return self.ResponseRequest_(user_,response,idrequest,user.key())
+        return "Error couldn't accept the request"
+
+    def ResponseRequest_(self,user_,response,idrequest,key):
+        respon=self.responseRequest(user_,response,idrequest)
+        if respon!=None:
+            return self.SavetDataBaseRequest(respon,response,key)
+        return "Error couldn't response the request"
+
+    def SavetDataBaseRequest(self,response,r,key):
+        response=self.CheckRequestList(response)
+        if self.Update_Request([response,key]):
+            if r==1:
+                return "Request was accepted"
+            if r==0:
+                return "Request was deleted"
+
+        return "Error couldn't save on the database"
+
+    def CheckRequestList(self,user_):
+        if len(user_["requests"])==0:
+            user_["requests"]=[0]
+        return user_
+    
+    def responseRequest(self,user,response,idrequest):
+        if len(user["requests"])>0 and user["requests"][0]!=0:
+            for x in user["requests"]:
+                if x==idrequest:
+                    newuser=self.decideRequest(response,idrequest,user)
+                    return newuser
+        return None
+
+
+    def decideRequest(self,response,idrequest,user):
+        if response==0:
+            user["requests"].remove(idrequest)
+        elif response==1:
+            user["requests"].remove(idrequest)
+            #add as a follower
+            self.AceptFollowigRequest([user,""],idrequest)
+        return user
+
     def GenerateRequest(self,idlocal,personidlocal,idToken):
         if self.CheckToken(idToken):
             response=self.sendresquest(idlocal,personidlocal)
@@ -49,14 +102,13 @@ class database:
         users_by_id = db.child("users").get()
         for user in users_by_id.each():
             user_=user.val()
-            print(user_['localId'])
-            print('Local',idlocal)
             if user_['localId']==idlocal:
                 return user.key()
         return None
 
     def Update_Request(self,person):
         try:
+            print (person)
             db =self.firebase.database()
             db.child("users").child(person[1]).set(person[0])
         except:
