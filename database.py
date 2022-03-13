@@ -43,6 +43,17 @@ class database:
 
         self.checkprofilesetting(person,sender)
         return self.Update_Request(person)
+    
+    def GetUuid(self,idlocal):
+        db =self.firebase.database()
+        users_by_id = db.child("users").get()
+        for user in users_by_id.each():
+            user_=user.val()
+            print(user_['localId'])
+            print('Local',idlocal)
+            if user_['localId']==idlocal:
+                return user.key()
+        return None
 
     def Update_Request(self,person):
         try:
@@ -123,6 +134,7 @@ class database:
     def SignIn(self,email,password):
         try:
             user = self.auth.sign_in_with_email_and_password(email, password)
+            user['uuid']=self.GetUuid(user["localId"])
             data=self.auth.get_account_info(user['idToken'])
             if (data['users'][0]['emailVerified'])==False:
                 self.verifyEmail (user['idToken'])
