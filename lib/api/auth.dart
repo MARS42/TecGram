@@ -6,7 +6,7 @@ import '../session/session.dart';
 class auth {
   final session = Session();
 
-  static const URL = 'http://10.0.0.3:5000/login';
+  static const URL = 'https://tecgram.azurewebsites.net/login';
 
   login(String correo, String password) async {
     try {
