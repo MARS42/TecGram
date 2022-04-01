@@ -10,11 +10,28 @@ class SignUpPage extends StatefulWidget {
 }
 
 class _SignUpPageState extends State<SignUpPage> {
-
-  var roles = ['Estudiante', 'Profesor', 'Departamento'];
-  var carreras = ['Ingeniería en sistemas computacionales', 'Ingeniería en gestión empresarial', 'Ingeniería industrial', 'Ingeniería electrónica', 'Ingenierpia mecatrónica', 'Contador público', 'Maestría administrativa'];
+  static const roles = ['Estudiante', 'Profesor', 'Departamento'];
+  static const carreras = [
+    'Ingeniería en sistemas computacionales',
+    'Ingeniería en gestión empresarial',
+    'Ingeniería industrial',
+    'Ingeniería electrónica',
+    'Ingenierpia mecatrónica',
+    'Contador público',
+    'Maestría administrativa'
+  ];
+  static const departamentos = [
+    'Sistemas',
+    'Gestion',
+    'Contador',
+    'Mecatronica',
+    'Industrial',
+    'Electronica',
+    'Basicas'
+  ];
 
   String rol = 'Estudiante';
+  String departamento = 'Sistemas';
   String carrera = 'Ingeniería en sistemas computacionales';
   var tabController;
 
@@ -24,8 +41,9 @@ class _SignUpPageState extends State<SignUpPage> {
   final controllerNombre = TextEditingController();
   final controllerApellidos = TextEditingController();
   final controllerArea = TextEditingController();
+  final controllerSemestre = TextEditingController();
 
-  bool esAlumno = false;
+  bool esAlumno = true;
 
   @override
   void initState() {
@@ -37,53 +55,85 @@ class _SignUpPageState extends State<SignUpPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-          title: const Text('Registrarse'),
+        title: const Text('Registrarse'),
       ),
       body: Form(
         key: _form,
-        child: Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        child: ListView(
+          children: [
+            Padding(
+              padding: const EdgeInsets.all(32.0),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                const Text("Registrarse como:"),
-                DropdownButton(
-                  icon: const Icon(Icons.keyboard_arrow_down),
-                  items: roles.map((e) => DropdownMenuItem(child: Row(children: [Icon(iconRol(e)), SizedBox(width: 10,), Text(e)],), value: e,)).toList(),
-                  value: rol,
-                  onChanged: (String? value) => cambiarRol(value),
-                )
-              ],),
-              Text("Tus datos"),
-              crearCampo(etiqueta: "Nombre(s)", context: context, controller: controllerNombre),
-              crearCampo(etiqueta: "Apellidos", context: context, controller: controllerApellidos),
-              Text("Datos de acceso"),
-              crearCampo(etiqueta: "Correo institucional", context: context, controller: controllerEmail),
-              crearCampo(etiqueta: "Contraseña para TecGram", ocultable: true, context: context, controller: controllerPassword),
-              (esAlumno ?
-              DropdownButton(
-                icon: const Icon(Icons.keyboard_arrow_down),
-                items: carreras.map((e) => DropdownMenuItem(child: Row(children: [Icon(iconRol(e)), SizedBox(width: 10,), Text(e)],), value: e,)).toList(),
-                value: carrera,
-                onChanged: (String? value) {
-                  setState(() {
-                    carrera = value!;
-                  });
-                },
-              ) : Text("DEP")
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      const Expanded(child: Text("Registrarse como:")),
+                      DropdownButton(
+                        icon: const Icon(Icons.keyboard_arrow_down),
+                        items: roles
+                            .map((e) => DropdownMenuItem(
+                                  child: Row(
+                                    children: [
+                                      Icon(iconRol(e)),
+                                      SizedBox(
+                                        width: 10,
+                                      ),
+                                      Text(e)
+                                    ],
+                                  ),
+                                  value: e,
+                                ))
+                            .toList(),
+                        value: rol,
+                        onChanged: (String? value) => cambiarRol(value),
+                      )
+                    ],
+                  ),
+                  Text("Tus datos"),
+                  crearCampo(
+                      etiqueta: "Nombre(s)",
+                      context: context,
+                      controller: controllerNombre),
+                  crearCampo(
+                      etiqueta: "Apellidos",
+                      context: context,
+                      controller: controllerApellidos),
+                  esAlumno ? crearCampo(
+                      etiqueta: "Semestre",
+                      context: context,
+                      controller: controllerSemestre) : const Text(""),
+                  Text("Datos de acceso"),
+                  crearCampo(
+                      etiqueta: "Correo institucional",
+                      context: context,
+                      controller: controllerEmail),
+                  crearCampo(
+                      etiqueta: "Contraseña para TecGram",
+                      ocultable: true,
+                      context: context,
+                      controller: controllerPassword),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      Expanded(child: Text(esAlumno ? 'Tu carrera' : 'Tu departamento')),
+                      obtenerDropdown(esAlumno ? carreras : departamentos, esAlumno ? carrera : departamento)
+                    ],
+                  ),
+                  Center(child: ElevatedButton(onPressed: () => {}, child: const Text("Registrarse")))
+                ],
               ),
-            ],
-          ),
+            ),
+          ],
         ),
       ),
     );
   }
 
-  IconData iconRol(String rol){
-    switch(rol){
+  IconData iconRol(String rol) {
+    switch (rol) {
       case 'Estudiante':
         return Icons.face;
       case 'Profesor':
@@ -94,7 +144,7 @@ class _SignUpPageState extends State<SignUpPage> {
     return Icons.info;
   }
 
-  void cambiarRol(String? value){
+  void cambiarRol(String? value) {
     setState(() {
       rol = value!;
       esAlumno = rol == 'Estudiante';
@@ -110,9 +160,27 @@ class _SignUpPageState extends State<SignUpPage> {
   //   );
   // }
 
-  Widget campoEstudiante(BuildContext context){
-    return Row(children: [
-      Text("Departamento"),
-    ],);
+  DropdownButton obtenerDropdown(List<String> lista, String defaultItem) {
+    return DropdownButton(
+      icon: const Icon(Icons.keyboard_arrow_down),
+      items: lista
+          .map((e) => DropdownMenuItem(
+                child: Text(e),
+                value: e,
+              ))
+          .toList(),
+      value: defaultItem,
+      onChanged: cambiarCarreraDepto,
+    );
+  }
+
+  void cambiarCarreraDepto(dynamic valor) {
+    setState(() {
+      if (esAlumno) {
+        carrera = valor.toString();
+      } else {
+        departamento = valor.toString();
+      }
+    });
   }
 }
