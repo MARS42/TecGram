@@ -24,15 +24,15 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(primarySwatch: Colors.indigo),
 
       //Pantalla por defecto al abrir la aplicación
-      home: SplashPage(),
+      home: const SplashPage(),
 
       //Rutas desde esta pantalla
       routes: {
         //Ruta a la vista de login
-        'login': (BuildContext context) => LoginPage(),
+        'login': (BuildContext context) => const LoginPage(),
 
         //Ruta a la vista de home
-        'home': (BuildContext context) => HomePage(),
+        'home': (BuildContext context) => const HomePage(),
       },
     );
   }

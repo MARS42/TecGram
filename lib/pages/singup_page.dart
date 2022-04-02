@@ -1,6 +1,9 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
+import 'package:tecgram_app/api/auth.dart';
 import 'package:tecgram_app/pages/login_page.dart';
+import 'package:tecgram_app/pages/widgets/campoTexto.dart';
 
 class SignUpPage extends StatefulWidget {
   const SignUpPage({Key? key}) : super(key: key);
@@ -11,6 +14,12 @@ class SignUpPage extends StatefulWidget {
 
 class _SignUpPageState extends State<SignUpPage> {
   static const roles = ['Estudiante', 'Profesor', 'Departamento'];
+  static const Map<String, String> rolesKey = {
+    'Estudiante': 'student',
+    'Profesor': 'teacher',
+    'Departamento': 'office'
+  };
+
   static const carreras = [
     'Ingeniería en sistemas computacionales',
     'Ingeniería en gestión empresarial',
@@ -20,6 +29,17 @@ class _SignUpPageState extends State<SignUpPage> {
     'Contador público',
     'Maestría administrativa'
   ];
+
+  static const Map<String, String> careersKey = {
+    'Ingeniería en sistemas computacionales': 'ISC',
+    'Ingeniería en gestión empresarial': 'IGE',
+    'Ingeniería industrial': 'II',
+    'Ingeniería electrónica': 'IE',
+    'Ingenierpia mecatrónica': 'IM',
+    'Contador público': 'CP',
+    'Maestría administrativa': 'MA'
+  };
+
   static const departamentos = [
     'Sistemas',
     'Gestion',
@@ -29,6 +49,8 @@ class _SignUpPageState extends State<SignUpPage> {
     'Electronica',
     'Basicas'
   ];
+
+  bool cargando = false;
 
   String rol = 'Estudiante';
   String departamento = 'Sistemas';
@@ -59,75 +81,90 @@ class _SignUpPageState extends State<SignUpPage> {
       ),
       body: Form(
         key: _form,
-        child: ListView(
-          children: [
-            Padding(
-              padding: const EdgeInsets.all(32.0),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.start,
-                crossAxisAlignment: CrossAxisAlignment.start,
+        child: !cargando
+            ? ListView(
                 children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: [
-                      const Expanded(child: Text("Registrarse como:")),
-                      DropdownButton(
-                        icon: const Icon(Icons.keyboard_arrow_down),
-                        items: roles
-                            .map((e) => DropdownMenuItem(
-                                  child: Row(
-                                    children: [
-                                      Icon(iconRol(e)),
-                                      SizedBox(
-                                        width: 10,
-                                      ),
-                                      Text(e)
-                                    ],
-                                  ),
-                                  value: e,
-                                ))
-                            .toList(),
-                        value: rol,
-                        onChanged: (String? value) => cambiarRol(value),
-                      )
-                    ],
+                  Padding(
+                    padding: const EdgeInsets.all(32.0),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          children: [
+                            const Expanded(child: Text("Registrarse como:")),
+                            DropdownButton(
+                              icon: const Icon(Icons.keyboard_arrow_down),
+                              items: roles
+                                  .map((e) => DropdownMenuItem(
+                                        child: Row(
+                                          children: [
+                                            Icon(iconRol(e)),
+                                            SizedBox(
+                                              width: 10,
+                                            ),
+                                            Text(e)
+                                          ],
+                                        ),
+                                        value: e,
+                                      ))
+                                  .toList(),
+                              value: rol,
+                              onChanged: (String? value) => cambiarRol(value),
+                            )
+                          ],
+                        ),
+                        const Text("Tus datos"),
+                        CampoTexto(
+                            etiqueta: 'Nombre(s)',
+                            controller: controllerNombre,
+                            ocultable: false),
+                        CampoTexto(
+                            etiqueta: 'Apellidos',
+                            controller: controllerApellidos,
+                            ocultable: false),
+                        (esAlumno
+                            ? CampoTexto(
+                                etiqueta: 'Semestre',
+                                controller: controllerSemestre,
+                                ocultable: false)
+                            : const Text('')),
+                        const Text("Datos de acceso"),
+                        CampoTexto(
+                            etiqueta: 'Correo institucional',
+                            controller: controllerEmail,
+                            ocultable: false),
+                        CampoTexto(
+                            etiqueta: 'Contraseña para Tecgram',
+                            controller: controllerPassword,
+                            ocultable: true),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: [
+                            Expanded(
+                                child: Text(esAlumno
+                                    ? 'Tu carrera'
+                                    : 'Tu departamento')),
+                            obtenerDropdown(esAlumno ? carreras : departamentos,
+                                esAlumno ? carrera : departamento)
+                          ],
+                        ),
+                        Center(
+                            child: ElevatedButton(
+                                onPressed: () =>
+                                    verificarFormulario(_form, context),
+                                child: const Text("Registrarse")))
+                      ],
+                    ),
                   ),
-                  Text("Tus datos"),
-                  crearCampo(
-                      etiqueta: "Nombre(s)",
-                      context: context,
-                      controller: controllerNombre),
-                  crearCampo(
-                      etiqueta: "Apellidos",
-                      context: context,
-                      controller: controllerApellidos),
-                  esAlumno ? crearCampo(
-                      etiqueta: "Semestre",
-                      context: context,
-                      controller: controllerSemestre) : const Text(""),
-                  Text("Datos de acceso"),
-                  crearCampo(
-                      etiqueta: "Correo institucional",
-                      context: context,
-                      controller: controllerEmail),
-                  crearCampo(
-                      etiqueta: "Contraseña para TecGram",
-                      ocultable: true,
-                      context: context,
-                      controller: controllerPassword),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: [
-                      Expanded(child: Text(esAlumno ? 'Tu carrera' : 'Tu departamento')),
-                      obtenerDropdown(esAlumno ? carreras : departamentos, esAlumno ? carrera : departamento)
-                    ],
-                  ),
-                  Center(child: ElevatedButton(onPressed: () => {}, child: const Text("Registrarse")))
                 ],
+              )
+            : Column(
+                children: const [CupertinoActivityIndicator(radius: 20)],
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                mainAxisAlignment: MainAxisAlignment.center,
               ),
-            ),
-          ],
-        ),
       ),
     );
   }
@@ -182,5 +219,67 @@ class _SignUpPageState extends State<SignUpPage> {
         departamento = valor.toString();
       }
     });
+  }
+
+  void verificarFormulario(formulario, BuildContext context) async {
+    if (formulario.currentState!.validate()) {
+      setState(() {
+        cargando = true;
+      });
+      final authentication = auth();
+      //final res = await authentication.login(controllerEmail.text, controllerPassword.text);
+      final res = await authentication.signUp(
+          controllerEmail.text,
+          controllerPassword.text,
+          esAlumno
+              ? {
+                  'rol': rolesKey[rol]!,
+                  'career': careersKey[carrera]!,
+                  'semester': controllerSemestre.text,
+                  'name': controllerNombre.text,
+                  'lastname': controllerApellidos.text
+                }
+              : {
+                  'rol': rolesKey[rol]!,
+                  'deparment': departamento,
+                  'name': controllerNombre.text,
+                  'lastname': controllerApellidos.text
+                });
+      setState(() {
+        cargando = false;
+      });
+
+      if (res["success"] == false) {
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+          content: Text("Error: " + res["data"]),
+          duration: const Duration(seconds: 5),
+          behavior: SnackBarBehavior.floating,
+          padding: const EdgeInsets.all(16.0),
+        ));
+      } else {
+
+        await showDialog(
+          context: context,
+          builder: (BuildContext context) {
+            return SimpleDialog(
+              title: Text('Registro completado'),
+              contentPadding: EdgeInsets.all(16.0),
+              children: [
+                Text('Confirma tu registro mediante el enlace enviado a tu correo institucional.'),
+                Center(child: SimpleDialogOption(onPressed: () => Navigator.pop(context), child: Text("Cerrar"),))
+              ],
+            );
+          }
+        );
+
+        //Navigator.pushReplacementNamed(context, "home", arguments: res["data"]); -> Con esto pdoría entrar directamente a home pero debe confirmar registro.
+        Navigator.pushReplacementNamed(context, "login");
+      }
+    }
+  }
+
+  void registrarse(BuildContext context) {
+    Navigator.push(
+        context, MaterialPageRoute(builder: (context) => const SignUpPage()));
   }
 }

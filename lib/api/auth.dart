@@ -6,13 +6,13 @@ import '../session/session.dart';
 class auth {
   final session = Session();
 
-  static const URL = 'https://tecgram.azurewebsites.net/login';
+  static const URL = 'https://tecgram.azurewebsites.net/';
 
   login(String correo, String password) async {
     try {
       Map<String, String> body = {'email': correo, 'password': password};
 
-      final respuesta = await http.post(Uri.parse(URL),
+      final respuesta = await http.post(Uri.parse(URL + 'login'),
           headers: {
             "Accept": "application/json",
             "Access-Control_Allow_Origin": "*",
@@ -20,6 +20,7 @@ class auth {
           },
           body: json.encode(body));
 
+      
       final perfil = json.decode(respuesta.body);
 
       String responseType = perfil["response"].runtimeType.toString();
@@ -47,5 +48,29 @@ class auth {
         msg == "Email adress is invalid") return true;
 
     return false;
+  }
+
+  signUp(String email, String password, Map<String, String> data) async {
+    Map<String, dynamic> body = {
+      'email': email,
+      'password': password,
+      'data': data
+    };
+    final respuesta = await http.post(Uri.parse(URL + 'signin'),
+        headers: {
+          "Accept": "application/json",
+          "Access-Control_Allow_Origin": "*",
+          'Content-Type': 'application/json'
+        },
+        body: json.encode(body));
+
+    print(respuesta.body);
+    final register = json.decode(respuesta.body);
+
+    if (register["response"] != "User added") {
+      return { 'success': false, 'data': register["response"] };
+    }
+
+    return { 'success': true, 'data': await login(email, password) };
   }
 }

@@ -1,8 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
 import 'package:tecgram_app/api/auth.dart';
 import 'package:tecgram_app/pages/singup_page.dart';
+import 'package:tecgram_app/pages/widgets/campoTexto.dart';
 
 /// Página de Login y registro
 class LoginPage extends StatefulWidget {
@@ -38,16 +38,16 @@ class _LoginPageState extends State<LoginPage> {
                   ? Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
-                  crearCampo(etiqueta: "Correo", context: context, controller: controllerEmail),
-                  crearCampo(etiqueta: "Contraseña", ocultable: true, context: context, controller: controllerPassword),
+                  CampoTexto(etiqueta: "Correo", controller: controllerEmail),
+                  CampoTexto(etiqueta: "Contraseña", ocultable: true, controller: controllerPassword),
                   ElevatedButton(
                       child: const Text("Ingresar"),
                       onPressed: ()  => verificarFormulario(_formulario, context)
                   ),
-                  OutlinedButton(onPressed: () => registrarse(context), child: Text('No tengo cuenta'))
+                  OutlinedButton(onPressed: () => registrarse(context), child: const Text('No tengo cuenta'))
                 ],
                   )
-                  : const CupertinoActivityIndicator(radius: 20,),
+                  : const Center(child: CupertinoActivityIndicator(radius: 20,)),
             )
           ],
         ),
@@ -56,6 +56,7 @@ class _LoginPageState extends State<LoginPage> {
   }
 
   void verificarFormulario(formulario, BuildContext context) async{
+
     if (formulario.currentState!.validate()) {
       setState(() {
         cargando = true;
@@ -71,7 +72,7 @@ class _LoginPageState extends State<LoginPage> {
           const SnackBar(content: Text("Correo o contraseña no válidos"),
           duration: Duration(seconds: 5),
           behavior: SnackBarBehavior.floating,
-          padding: EdgeInsets.all(8.0),)
+          padding: EdgeInsets.all(16.0),)
         );
       } else {
         Navigator.pushReplacementNamed(
@@ -86,33 +87,28 @@ class _LoginPageState extends State<LoginPage> {
 }
 
 /// Crear un campo de texto
-Widget crearCampo(
-    { etiqueta,
-      ocultable = false,
-      required BuildContext context,
-      required TextEditingController controller }) {
-  return Padding(
-    padding: const EdgeInsets.all(8.0),
-    child: Column(
-      mainAxisAlignment: MainAxisAlignment.start,
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        TextFormField(
-          validator: (value) {
-            if(value != null && value.isEmpty)
-              return 'Es necesario este campo';
-          },
-          controller: controller,
-          obscureText: ocultable,
-          decoration: InputDecoration(
-            border: const OutlineInputBorder(),
-            labelText: etiqueta,
-            labelStyle: const TextStyle(
-              fontSize: 16,
-            )
-          ),
-        )
-      ],
-    ),
-  );
-}
+// Widget crearCampo(
+//     { etiqueta,
+//       ocultable = false,
+//       required BuildContext context,
+//       required TextEditingController controller }) {
+//   return Container(
+//     margin: const EdgeInsets.fromLTRB(0,0,0, 16.0),
+//     child: TextFormField(
+//       validator: (value) {
+//         if(value != null && value.isEmpty)
+//           return 'Es necesario este campo';
+//       },
+      
+//       controller: controller,
+//       obscureText: ocultable,
+//       decoration: InputDecoration(
+//         border: const OutlineInputBorder(),
+//         labelText: etiqueta,
+//         labelStyle: const TextStyle(
+//           fontSize: 16,
+//         )
+//       ),
+//     ),
+//   );
+// }
