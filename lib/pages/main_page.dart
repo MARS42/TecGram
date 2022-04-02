@@ -1,6 +1,7 @@
+import 'package:flutter/animation.dart';
 import 'package:flutter/material.dart';
 import 'package:tecgram_app/pages/home/account_view.dart';
-import 'package:tecgram_app/session/session.dart';
+import 'package:tecgram_app/pages/home/messages_view.dart';
 
 /// Página principal de la aplicación
 class MainPage extends StatefulWidget {
@@ -18,11 +19,13 @@ class _MainPageState extends State<MainPage> with TickerProviderStateMixin {
   void cambiarVista(int i) {
     setState(() {
       _viewIndex = i;
-      tabController.index = i;
+      tabController.animateTo(i, curve: Curves.elasticIn);
     });
   }
 
-  final List<Widget> _vistas = [];
+  final List<dynamic> _vistas = [];
+  final List<Widget> _vistasFrags = [];
+  final List<BottomNavigationBarItem> _vistasBtns = [];
 
   @override
   void didChangeDependencies() {
@@ -31,15 +34,36 @@ class _MainPageState extends State<MainPage> with TickerProviderStateMixin {
 
     session = ModalRoute.of(context)!.settings.arguments;
 
-    _vistas.add(Text("Inicio"));
-    _vistas.add(Text("Buscar"));
-    _vistas.add(AccountView(session: session));
+    _vistas.add(["Inicio", Icon(Icons.home), Text("Inicio")]);
+    _vistas.add(["Mensajes", Icon(Icons.mail_outlined), MessagesPage()]);
+    _vistas.add(["Buscar", Icon(Icons.search), Text("Buscar")]);
+    _vistas.add(["Perfil", Icon(Icons.person_rounded), AccountView(session: session)]);
+
+    for(var i = 0; i < _vistas.length; i++){
+      _vistasBtns.add(BottomNavigationBarItem(icon: (_vistas[i][1]), label: _vistas[i][0]));
+      _vistasFrags.add(_vistas[i][2]);
+    }
 
     tabController = TabController(
       initialIndex: 0,
       length: _vistas.length,
       vsync: this,
     );
+
+    tabController.animation?.addListener(() {
+      // num diff = (tabController.index - tabController.animation!.value).abs();
+      //
+      // if(diff > 0.5) {
+      //   setState(() {
+      //     _viewIndex = tabController.animation!.value.round();
+      //   });
+      // }
+      if(tabController.indexIsChanging) {
+        setState(() {
+          _viewIndex = tabController.index;
+        });
+      }
+    });
   }
   @override
   Widget build(BuildContext context) {
@@ -48,24 +72,24 @@ class _MainPageState extends State<MainPage> with TickerProviderStateMixin {
         headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
           return <Widget>[
             SliverAppBar(
-              title: const Text('Instituto Tecnológico de Cuautla'),
+              title: const Text("Tecgram"),
               pinned: true,
               floating: true,
               bottom: AppBar(
                   title: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  const Text("Tecgram"),
+                  Text(_vistas[_viewIndex][0]),
                   Row(
                     children: [
                       IconButton(
-                        icon: const Icon(Icons.favorite_outline_rounded),
+                        icon: const Icon(Icons.notifications),
                         onPressed: () {},
                       ),
-                      IconButton(
-                        icon: const Icon(Icons.mail_outlined),
-                        onPressed: () {},
-                      )
+                      // IconButton(
+                      //   icon: const Icon(Icons.mail_outlined),
+                      //   onPressed: () {},
+                      // )
                     ],
                   )
                 ],
@@ -75,18 +99,15 @@ class _MainPageState extends State<MainPage> with TickerProviderStateMixin {
         },
         body: TabBarView(
           controller: tabController,
-          children: _vistas,
+          children: _vistasFrags,
         ),
       ),
       bottomNavigationBar: BottomNavigationBar(
-        items: const [
-          BottomNavigationBarItem(icon: Icon(Icons.home), label: "Inicio"),
-          BottomNavigationBarItem(icon: Icon(Icons.search), label: "Buscar"),
-          BottomNavigationBarItem(
-              icon: Icon(Icons.person_rounded), label: "Perfil"),
-        ],
+        items: _vistasBtns,
         currentIndex: _viewIndex,
         selectedItemColor: Colors.indigo,
+        backgroundColor: Colors.indigo,
+        unselectedItemColor: Colors.black45,
         onTap: cambiarVista,
       ),
       floatingActionButton: _viewIndex == 0
