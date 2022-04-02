@@ -1,17 +1,19 @@
 import 'package:flutter/material.dart';
 
 class CampoTexto extends StatefulWidget {
-  final String? etiqueta;
-  final TextEditingController? controller;
-  final bool ocultable;
+  String? etiqueta;
+  TextEditingController? controller;
+  bool ocultar;
+  bool ver = false;
 
-  const CampoTexto(
-      {
-        Key? key,
-        this.etiqueta,
-        this.controller,
-        this.ocultable = false
-      })
+  final Icon? icono;
+
+  CampoTexto(
+      {Key? key,
+      this.etiqueta,
+      this.controller,
+      this.ocultar = false,
+      this.icono})
       : super(key: key);
 
   @override
@@ -28,14 +30,26 @@ class CampoTextoState extends State<CampoTexto> {
           if (value != null && value.isEmpty) return 'Es necesario este campo';
         },
         controller: widget.controller,
-        obscureText: widget.ocultable,
+        obscureText: widget.ocultar ? !widget.ver : false,
         decoration: InputDecoration(
-            border: const OutlineInputBorder(),
-            labelText: widget.etiqueta,
-            labelStyle: const TextStyle(
-              fontSize: 16,
-            )),
+          border: const OutlineInputBorder(),
+          labelText: widget.etiqueta,
+          labelStyle: const TextStyle(
+            fontSize: 16,
+          ),
+          prefixIcon: widget.icono,
+          suffixIcon: widget.ocultar ? GestureDetector(
+            child: Icon(widget.ver ? Icons.visibility_off : Icons.visibility),
+            onTap: cambiarVisibilidad,
+          ) : null,
+        ),
       ),
     );
+  }
+
+  cambiarVisibilidad() {
+    setState(() {
+      widget.ver = !widget.ver;
+    });
   }
 }

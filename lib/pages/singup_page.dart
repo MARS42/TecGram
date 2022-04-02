@@ -119,26 +119,26 @@ class _SignUpPageState extends State<SignUpPage> {
                         CampoTexto(
                             etiqueta: 'Nombre(s)',
                             controller: controllerNombre,
-                            ocultable: false),
+                            ocultar: false),
                         CampoTexto(
                             etiqueta: 'Apellidos',
                             controller: controllerApellidos,
-                            ocultable: false),
+                            ocultar: false),
                         (esAlumno
                             ? CampoTexto(
                                 etiqueta: 'Semestre',
                                 controller: controllerSemestre,
-                                ocultable: false)
+                                ocultar: false)
                             : const Text('')),
                         const Text("Datos de acceso"),
                         CampoTexto(
                             etiqueta: 'Correo institucional',
                             controller: controllerEmail,
-                            ocultable: false),
+                            ocultar: false),
                         CampoTexto(
                             etiqueta: 'Contraseña para Tecgram',
                             controller: controllerPassword,
-                            ocultable: true),
+                            ocultar: true),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.start,
                           children: [

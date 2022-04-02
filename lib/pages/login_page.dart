@@ -39,7 +39,7 @@ class _LoginPageState extends State<LoginPage> {
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
                   CampoTexto(etiqueta: "Correo", controller: controllerEmail),
-                  CampoTexto(etiqueta: "Contraseña", ocultable: true, controller: controllerPassword),
+                  CampoTexto(etiqueta: "Contraseña", ocultar: true, controller: controllerPassword),
                   ElevatedButton(
                       child: const Text("Ingresar"),
                       onPressed: ()  => verificarFormulario(_formulario, context)
