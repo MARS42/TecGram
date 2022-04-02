@@ -76,7 +76,7 @@ class _LoginPageState extends State<LoginPage> {
         );
       } else {
         Navigator.pushReplacementNamed(
-            context, "home", arguments: res[1]);
+            context, "main", arguments: res[1]);
       }
     }
   }

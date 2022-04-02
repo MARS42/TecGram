@@ -3,14 +3,14 @@ import 'package:tecgram_app/pages/home/account_view.dart';
 import 'package:tecgram_app/session/session.dart';
 
 /// Página principal de la aplicación
-class HomePage extends StatefulWidget {
-  const HomePage({Key? key}) : super(key: key);
+class MainPage extends StatefulWidget {
+  const MainPage({Key? key}) : super(key: key);
 
   @override
-  _HomePageState createState() => _HomePageState();
+  _MainPageState createState() => _MainPageState();
 }
 
-class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
+class _MainPageState extends State<MainPage> with TickerProviderStateMixin {
   dynamic session;
   int _viewIndex = 0;
   late TabController tabController;

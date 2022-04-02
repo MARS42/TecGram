@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:tecgram_app/pages/home_page.dart';
+import 'package:tecgram_app/pages/main_page.dart';
 import 'package:tecgram_app/pages/login_page.dart';
 import 'package:tecgram_app/pages/splash_page.dart';
 
@@ -32,7 +32,7 @@ class MyApp extends StatelessWidget {
         'login': (BuildContext context) => const LoginPage(),
 
         //Ruta a la vista de home
-        'home': (BuildContext context) => const HomePage(),
+        'main': (BuildContext context) => const MainPage(),
       },
     );
   }
