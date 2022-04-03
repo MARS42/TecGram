@@ -31,6 +31,7 @@ class MyApp extends StatelessWidget {
       routes: {
         //Ruta a la vista de login
         'login': (BuildContext context) => const LoginPage(),
+
         'concentrictransition': (BuildContext context) =>
             const ConcentricTransition(),
 

@@ -118,9 +118,7 @@ class _LoginPageState extends State<LoginPage> {
           padding: EdgeInsets.all(16.0),
         ));
       } else {
-        print(res.lenght);
-
-        //Navigator.pushReplacementNamed(context, "main", arguments: res[1]);
+        Navigator.pushReplacementNamed(context, "main", arguments: res[1]);
       }
     }
   }

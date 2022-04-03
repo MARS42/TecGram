@@ -1,7 +1,9 @@
 import 'package:flutter/animation.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:tecgram_app/pages/home/account_view.dart';
 import 'package:tecgram_app/pages/home/messages_view.dart';
+import 'package:tecgram_app/pages/home/homepage.dart';
 
 /// Página principal de la aplicación
 class MainPage extends StatefulWidget {
@@ -34,13 +36,17 @@ class _MainPageState extends State<MainPage> with TickerProviderStateMixin {
 
     session = ModalRoute.of(context)!.settings.arguments;
 
-    _vistas.add(["Inicio", Icon(Icons.home), Text("Inicio")]);
-    _vistas.add(["Mensajes", Icon(Icons.mail_outlined), MessagesPage()]);
-    _vistas.add(["Buscar", Icon(Icons.search), Text("Buscar")]);
-    _vistas.add(["Perfil", Icon(Icons.person_rounded), AccountView(session: session)]);
+    _vistas.add(["Inicio", Icon(CupertinoIcons.home), HomeTab()]);
+    _vistas.add(["Mensajes", Icon(CupertinoIcons.chat_bubble), MessagesPage()]);
+    _vistas.add(["Añadir", Icon(CupertinoIcons.add_circled), Text("Añadir")]);
+    _vistas.add(["Buscar", Icon(CupertinoIcons.search), Text("Buscar")]);
 
-    for(var i = 0; i < _vistas.length; i++){
-      _vistasBtns.add(BottomNavigationBarItem(icon: (_vistas[i][1]), label: _vistas[i][0]));
+    _vistas.add(
+        ["Perfil", Icon(CupertinoIcons.person), AccountView(session: session)]);
+
+    for (var i = 0; i < _vistas.length; i++) {
+      _vistasBtns.add(
+          BottomNavigationBarItem(icon: (_vistas[i][1]), label: _vistas[i][0]));
       _vistasFrags.add(_vistas[i][2]);
     }
 
@@ -58,49 +64,32 @@ class _MainPageState extends State<MainPage> with TickerProviderStateMixin {
       //     _viewIndex = tabController.animation!.value.round();
       //   });
       // }
-      if(tabController.indexIsChanging) {
+      if (tabController.indexIsChanging) {
         setState(() {
           _viewIndex = tabController.index;
         });
       }
     });
   }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: NestedScrollView(
-        headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
-          return <Widget>[
-            SliverAppBar(
-              title: const Text("Tecgram"),
-              pinned: true,
-              floating: true,
-              bottom: AppBar(
-                  title: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text(_vistas[_viewIndex][0]),
-                  Row(
-                    children: [
-                      IconButton(
-                        icon: const Icon(Icons.notifications),
-                        onPressed: () {},
-                      ),
-                      // IconButton(
-                      //   icon: const Icon(Icons.mail_outlined),
-                      //   onPressed: () {},
-                      // )
-                    ],
-                  )
-                ],
-              )),
+      appBar: AppBar(
+          title: Text(
+            "Tecgram",
+            style: TextStyle(color: Colors.black),
+          ),
+          backgroundColor: Colors.white,
+          actions: [
+            IconButton(
+              icon: const Icon(Icons.notifications, color: Colors.black),
+              onPressed: () {},
             ),
-          ];
-        },
-        body: TabBarView(
-          controller: tabController,
-          children: _vistasFrags,
-        ),
+          ]),
+      body: TabBarView(
+        controller: tabController,
+        children: _vistasFrags,
       ),
       bottomNavigationBar: BottomNavigationBar(
         items: _vistasBtns,
@@ -110,7 +99,7 @@ class _MainPageState extends State<MainPage> with TickerProviderStateMixin {
         unselectedItemColor: Colors.black45,
         onTap: cambiarVista,
       ),
-      floatingActionButton: _viewIndex == 0
+      floatingActionButton: _viewIndex == 1
           ? FloatingActionButton(
               child: const Icon(Icons.post_add),
               onPressed: () {},

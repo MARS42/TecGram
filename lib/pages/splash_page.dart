@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:tecgram_app/session/session.dart';
@@ -16,6 +18,7 @@ class _SplashPageState extends State<SplashPage> {
     super.initState();
 
     // Al iniciar el Widget, verificar por una sesión
+
     CheckSession();
   }
 
@@ -27,14 +30,16 @@ class _SplashPageState extends State<SplashPage> {
     // Si la sesión es nula (no existe)
     if (_data == null) {
       // Navegar a la ruta Login
-       Navigator.pushReplacementNamed(context, 'login');
+
+      Navigator.pushReplacementNamed(context, 'login');
 
       // Y retornar
       return;
     }
 
     // Si no se cumplió la condición, se navega a la ruta de Home
-     Navigator.pushReplacementNamed(context, 'main', arguments: _data);
+    await Future.delayed(Duration(seconds: 3));
+    Navigator.pushReplacementNamed(context, 'main', arguments: _data);
   }
 
   /// La vista del widget solo mostrará un simbolo de carga
@@ -47,24 +52,32 @@ class _SplashPageState extends State<SplashPage> {
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
           Spacer(),
-
           Center(
-            child:
-            Container(
-              child: Column(children: [
-                Image.asset('assets/logo.png'),
-                Text("Tecgram",style: TextStyle(fontSize: 20,color:Colors.white, fontWeight: FontWeight.bold),)
-              ],),
+            child: Container(
+              child: Column(
+                children: [
+                  Image.asset(
+                    'assets/logo.png',
+                  ),
+                  Text(
+                    "Tecgram",
+                    style: TextStyle(
+                        fontSize: 20,
+                        color: Colors.white,
+                        fontWeight: FontWeight.bold),
+                  )
+                ],
+              ),
             ),
-
-          )
-        ,
+          ),
           Spacer(),
           CupertinoActivityIndicator(
             radius: 20,
             color: Colors.white,
+          ),
+          SizedBox(
+            height: 20,
           )
-          ,SizedBox(height: 20,)
         ],
       ),
     ));
