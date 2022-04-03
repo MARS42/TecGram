@@ -38,10 +38,13 @@ class CampoTextoState extends State<CampoTexto> {
             fontSize: 16,
           ),
           prefixIcon: widget.icono,
-          suffixIcon: widget.ocultar ? GestureDetector(
-            child: Icon(widget.ver ? Icons.visibility_off : Icons.visibility),
-            onTap: cambiarVisibilidad,
-          ) : null,
+          suffixIcon: widget.ocultar
+              ? GestureDetector(
+                  child: Icon(
+                      widget.ver ? Icons.visibility_off : Icons.visibility),
+                  onTap: cambiarVisibilidad,
+                )
+              : null,
         ),
       ),
     );

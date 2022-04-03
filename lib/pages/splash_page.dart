@@ -11,7 +11,6 @@ class SplashPage extends StatefulWidget {
 }
 
 class _SplashPageState extends State<SplashPage> {
-
   @override
   void initState() {
     super.initState();
@@ -26,26 +25,48 @@ class _SplashPageState extends State<SplashPage> {
     final _data = await _session.get();
 
     // Si la sesión es nula (no existe)
-    if(_data == null){
-
+    if (_data == null) {
       // Navegar a la ruta Login
-      Navigator.pushReplacementNamed(context, 'login');
+       Navigator.pushReplacementNamed(context, 'login');
 
       // Y retornar
       return;
     }
 
     // Si no se cumplió la condición, se navega a la ruta de Home
-    Navigator.pushReplacementNamed(context, 'main', arguments: _data);
+     Navigator.pushReplacementNamed(context, 'main', arguments: _data);
   }
 
   /// La vista del widget solo mostrará un simbolo de carga
   @override
   Widget build(BuildContext context) {
-    return const Scaffold(
-      body: Center(
-        child: CupertinoActivityIndicator(radius: 20),
-      )
-    );
+    return Scaffold(
+        body: Container(
+      color: Color.fromARGB(255, 11, 41, 85),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: <Widget>[
+          Spacer(),
+
+          Center(
+            child:
+            Container(
+              child: Column(children: [
+                Image.asset('assets/logo.png'),
+                Text("Tecgram",style: TextStyle(fontSize: 20,color:Colors.white, fontWeight: FontWeight.bold),)
+              ],),
+            ),
+
+          )
+        ,
+          Spacer(),
+          CupertinoActivityIndicator(
+            radius: 20,
+            color: Colors.white,
+          )
+          ,SizedBox(height: 20,)
+        ],
+      ),
+    ));
   }
 }

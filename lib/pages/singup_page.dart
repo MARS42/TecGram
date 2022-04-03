@@ -77,7 +77,18 @@ class _SignUpPageState extends State<SignUpPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Registrarse'),
+        elevation: 0,
+        backgroundColor: Colors.white,
+        leading: IconButton(
+          onPressed: () {
+            Navigator.pop(context);
+          },
+          icon: Icon(
+            Icons.arrow_back_ios,
+            size: 20,
+            color: Colors.black,
+          ),
+        ),
       ),
       body: Form(
         key: _form,
@@ -90,32 +101,85 @@ class _SignUpPageState extends State<SignUpPage> {
                       mainAxisAlignment: MainAxisAlignment.start,
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
+                        Center(
+                          child: Text("Crea una cuenta",
+                              style: TextStyle(fontSize: 30),
+                              textAlign: TextAlign.center),
+                        ),
+                        SizedBox(
+                          height: 30,
+                        ),
                         Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
-                            const Expanded(child: Text("Registrarse como:")),
-                            DropdownButton(
-                              icon: const Icon(Icons.keyboard_arrow_down),
-                              items: roles
-                                  .map((e) => DropdownMenuItem(
-                                        child: Row(
-                                          children: [
-                                            Icon(iconRol(e)),
+                            CupertinoButton(
+                                onPressed: () {
+                                  showCupertinoModalPopup<void>(
+                                    context: context,
+                                    builder: (BuildContext context) =>
+                                        CupertinoActionSheet(
+                                      title: const Text('Tipo de usuario'),
+                                      message: const Text(
+                                          'Selecciona un tipo de usuario para registar tu cuenta'),
+                                      actions: <CupertinoActionSheetAction>[
+                                        CupertinoActionSheetAction(
+                                          child: Row(children: [
+                                            Icon(iconRol("Estudiante")),
                                             SizedBox(
                                               width: 10,
                                             ),
-                                            Text(e)
-                                          ],
+                                            Text("Estudiante")
+                                          ]),
+                                          onPressed: () {
+                                            cambiarRol("Estudiante");
+                                            Navigator.pop(context);
+                                          },
                                         ),
-                                        value: e,
-                                      ))
-                                  .toList(),
-                              value: rol,
-                              onChanged: (String? value) => cambiarRol(value),
-                            )
+                                        CupertinoActionSheetAction(
+                                          child: Row(
+                                            children: [
+                                              Icon(iconRol("Profesor")),
+                                              SizedBox(
+                                                width: 10,
+                                              ),
+                                              const Text('Profesor'),
+                                            ],
+                                          ),
+                                          onPressed: () {
+                                            cambiarRol("Profesor");
+                                            Navigator.pop(context);
+                                          },
+                                        ),
+                                        CupertinoActionSheetAction(
+                                          child: Row(
+                                            children: [
+                                              Icon(iconRol("Departamento")),
+                                              SizedBox(
+                                                width: 10,
+                                              ),
+                                              const Text('Departamento'),
+                                            ],
+                                          ),
+                                          onPressed: () {
+                                            cambiarRol("Departamento");
+                                            Navigator.pop(context);
+                                          },
+                                        )
+                                      ],
+                                    ),
+                                  );
+                                },
+                                child: Text("Registrarse cuenta como: ")),
+                            Text(rol)
                           ],
                         ),
-                        const Text("Tus datos"),
+                        SizedBox(
+                          height: 10,
+                        ),
+                        const Text(
+                          "Tus datos",
+                          style: TextStyle(fontSize: 16),
+                        ),
                         CampoTexto(
                             etiqueta: 'Nombre(s)',
                             controller: controllerNombre,
@@ -130,7 +194,10 @@ class _SignUpPageState extends State<SignUpPage> {
                                 controller: controllerSemestre,
                                 ocultar: false)
                             : const Text('')),
-                        const Text("Datos de acceso"),
+                        const Text(
+                          "Datos de acceso",
+                          style: TextStyle(fontSize: 16),
+                        ),
                         CampoTexto(
                             etiqueta: 'Correo institucional',
                             controller: controllerEmail,
@@ -139,19 +206,26 @@ class _SignUpPageState extends State<SignUpPage> {
                             etiqueta: 'Contraseña para Tecgram',
                             controller: controllerPassword,
                             ocultar: true),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          children: [
-                            Expanded(
-                                child: Text(esAlumno
-                                    ? 'Tu carrera'
-                                    : 'Tu departamento')),
-                            obtenerDropdown(esAlumno ? carreras : departamentos,
-                                esAlumno ? carrera : departamento)
-                          ],
+                        esAlumno
+                            ? Center(
+                                child: Column(
+                                children: [
+                                  getDeparment(carreras),
+                                  Text(carrera)
+                                ],
+                              ))
+                            : Center(
+                                child: Row(children: [
+                                  getDeparment(departamentos),
+                                  Text(departamento)
+                                ]),
+                              ),
+                        SizedBox(
+                          height: 25,
                         ),
                         Center(
-                            child: ElevatedButton(
+                            child: CupertinoButton(
+                                color: Color.fromARGB(255, 17, 58, 102),
                                 onPressed: () =>
                                     verificarFormulario(_form, context),
                                 child: const Text("Registrarse")))
@@ -211,6 +285,33 @@ class _SignUpPageState extends State<SignUpPage> {
     );
   }
 
+  CupertinoButton getDeparment(List<String> lista) {
+    return CupertinoButton(
+        onPressed: () {
+          showCupertinoModalPopup<void>(
+            context: context,
+            builder: (BuildContext context) => CupertinoActionSheet(
+              title: Text(esAlumno ? 'Carreras' : 'Departamentos'),
+              message: Text(esAlumno
+                  ? 'Selecciona tu carrera'
+                  : 'Selecciona tu departamento'),
+              actions: <CupertinoActionSheetAction>[
+                for (var item in lista)
+                  CupertinoActionSheetAction(
+                    child: Text(item),
+                    onPressed: () {
+                      cambiarCarreraDepto(item);
+                      Navigator.pop(context);
+                    },
+                  ),
+              ],
+            ),
+          );
+        },
+        child: Text(
+            esAlumno ? 'Selecciona tu carrera' : 'Selecciona tu departamento'));
+  }
+
   void cambiarCarreraDepto(dynamic valor) {
     setState(() {
       if (esAlumno) {
@@ -228,6 +329,7 @@ class _SignUpPageState extends State<SignUpPage> {
       });
       final authentication = auth();
       //final res = await authentication.login(controllerEmail.text, controllerPassword.text);
+
       final res = await authentication.signUp(
           controllerEmail.text,
           controllerPassword.text,
@@ -257,23 +359,8 @@ class _SignUpPageState extends State<SignUpPage> {
           padding: const EdgeInsets.all(16.0),
         ));
       } else {
-
-        await showDialog(
-          context: context,
-          builder: (BuildContext context) {
-            return SimpleDialog(
-              title: Text('Registro completado'),
-              contentPadding: EdgeInsets.all(16.0),
-              children: [
-                Text('Confirma tu registro mediante el enlace enviado a tu correo institucional.'),
-                Center(child: SimpleDialogOption(onPressed: () => Navigator.pop(context), child: Text("Cerrar"),))
-              ],
-            );
-          }
-        );
-
         //Navigator.pushReplacementNamed(context, "home", arguments: res["data"]); -> Con esto pdoría entrar directamente a home pero debe confirmar registro.
-        Navigator.pushReplacementNamed(context, "login");
+        Navigator.pushReplacementNamed(context, "concentrictransition");
       }
     }
   }
