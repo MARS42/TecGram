@@ -190,6 +190,57 @@ class HomeTab extends StatelessWidget {
               ]),
             )
           ]),
+        ),
+        Container(
+          child: Column(children: [
+            Container(
+              child: Row(children: [
+                SizedBox(
+                  width: 20,
+                ),
+                Container(
+                    height: 35,
+                    width: 35,
+                    alignment: Alignment.bottomLeft,
+                    decoration: BoxDecoration(
+                        shape: BoxShape.circle,
+                        image: DecorationImage(
+                            fit: BoxFit.cover,
+                            image: NetworkImage(
+                                "https://universidadesdemexico.mx/logos/original/logo-instituto-tecnologico-de-cuautla.webp")))),
+                SizedBox(
+                  width: 10,
+                ),
+                Text(
+                  "Instituto Tecnlógico de Cuautla",
+                  style: TextStyle(fontWeight: FontWeight.bold),
+                )
+              ]),
+            ),
+            SizedBox(
+              height: 20,
+            ),
+            Container(
+                width: 650,
+                child: Image.network(
+                  'https://firebasestorage.googleapis.com/v0/b/tecgram-d61ad.appspot.com/o/tec3.jpg?alt=media&token=627672a0-d1fb-42cd-9c7f-8c877b6f62b2',
+                )),
+            Container(
+              child: Row(children: [
+                SizedBox(
+                  width: 20,
+                ),
+                IconButton(
+                  icon: const Icon(CupertinoIcons.heart),
+                  onPressed: () {},
+                ),
+                IconButton(
+                  icon: const Icon(CupertinoIcons.chat_bubble),
+                  onPressed: () {},
+                ),
+              ]),
+            )
+          ]),
         )
       ],
     ));

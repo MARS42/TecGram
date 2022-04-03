@@ -4,6 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:tecgram_app/pages/home/account_view.dart';
 import 'package:tecgram_app/pages/home/messages_view.dart';
 import 'package:tecgram_app/pages/home/homepage.dart';
+import 'package:tecgram_app/pages/home/upload.dart';
+import 'package:tecgram_app/pages/home/search.dart';
 
 /// Página principal de la aplicación
 class MainPage extends StatefulWidget {
@@ -38,8 +40,8 @@ class _MainPageState extends State<MainPage> with TickerProviderStateMixin {
 
     _vistas.add(["Inicio", Icon(CupertinoIcons.home), HomeTab()]);
     _vistas.add(["Mensajes", Icon(CupertinoIcons.chat_bubble), MessagesPage()]);
-    _vistas.add(["Añadir", Icon(CupertinoIcons.add_circled), Text("Añadir")]);
-    _vistas.add(["Buscar", Icon(CupertinoIcons.search), Text("Buscar")]);
+    _vistas.add(["Añadir", Icon(CupertinoIcons.add_circled), upload()]);
+    _vistas.add(["Buscar", Icon(CupertinoIcons.search), Search()]);
 
     _vistas.add(
         ["Perfil", Icon(CupertinoIcons.person), AccountView(session: session)]);
