@@ -1,16 +1,30 @@
-# tecgram_app
+# Tecgram frontend
+Proyecto escolar de red social para la materiañ de ***Sevicios web en dispositivos móviles***.
 
-A new ITC project.
+## Main
+Clase principal de la aplicación.
+ - [Main]()
 
-## Getting Started
+## Activities
+Actividades que se llevan a cabo en la aplicación.
+ - [Splash Page]()
+ - [Login / Sign In Page]()
+ - [Register / Sign Up]()
+ - [Main Page]()
 
-This project is a starting point for a Flutter application.
+## Fragments
+Fragments utilizados en las actividades.
+ - [Home View]()
+ - [Account View]()
+ - [Messages View]()
+ - [New post View]()
+ - [Campo Texto]()
 
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
-
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+## Conexión con backend
+Clases de utilidades para la conexión al backend y almacenamiento local.
+- [Auth]()
+- [Session]()
+<!--stackedit_data:
+eyJoaXN0b3J5IjpbLTQ5NTUwOTY3NSw4OTQ0MzExMjIsMTA5Mz
+Y5NDUyMl19
+-->
