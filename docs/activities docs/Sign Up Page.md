@@ -19,7 +19,7 @@ Asigna el valor tomado por la selección de carrera o departamento.
 - **verificarFormulario**
 Verifica el formulario realizando una evaluación de los campos si es que están vacíos, luego se realiza la llamada en una instancia de [Auth](../backend%20docs/Auth.md) para hacer el registro del usuario en el *backend* teniendo los siguientes escenarios:
 	- **Sí falla el registro:** Se notifica el error mediante un *Snackbar*.
-	- **Sí no hay errores:** Se notifica el registro exitoso y navega a la actividad de iniciar sesión ([Login Page]()).
+	- **Sí no hay errores:** Se notifica el registro exitoso y navega a la actividad de iniciar sesión ([Login Page](Login%20Page.md)).
 <!--stackedit_data:
 eyJoaXN0b3J5IjpbMjE0MDM1MjgyMSwtNTgxNjUxMjAxLC0yMT
 Y2MDU3OTAsLTE2OTIyNTk5MTddfQ==
