@@ -1,5 +1,5 @@
 # Fragment: *Home View*
-**Archivo:**  [*campoTexto.dart*]()
+**Archivo:**  [*campoTexto.dart*](../../lib/pages/widgets/campoTexto.dart)
 **Clase:**  *CampoTexto*
 **Widget:** *Stateful*
 ## Funcionalidad

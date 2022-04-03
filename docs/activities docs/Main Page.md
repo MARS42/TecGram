@@ -1,14 +1,14 @@
 # Activity: *Main Page*
-**Archivo:**  [*main_page.dart* ]()
+**Archivo:**  [*main_page.dart* ](../../lib/pages/main_page.dart)
 **Clase:**  *MainPage*  
 **Widget:**  *Stateful*  
 ## Funcionalidad
 Actividad principal de la aplicación.
 Muestra todas las acciones principales que se pueden realizar, además de mostrar los *fragments* de las vistas:
-  - [Home View]()
- - [Account View]()
- - [Messages View]()
- - [New post View]()
+  - [Home View](../fragments%20docs/Home%20View.md)
+ - [Account View](../fragments%20docs/Account%20View.md)
+ - [Messages View](../fragments%20docs/Messages%20View.md)
+ - [New post View](../fragments%20docs/New%20post%20Docs.md)
 
 La navegación se compone principalmente de una barra de navegación inferior que muestra las vistas.
 La presentación de los *fragments* se llevan a cabo dentro del *body* del *Scaffold* de la actividad.

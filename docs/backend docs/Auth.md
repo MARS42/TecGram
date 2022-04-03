@@ -1,5 +1,5 @@
 # Backend: *Auth*
-**Archivo:**  [*auth.dart*]()
+**Archivo:**  [*auth.dart*](../../lib/api/auth.dart)
 **Clase:**  *auth*
 **Widget:** *No*
 ## Funcionalidad

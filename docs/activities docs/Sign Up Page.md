@@ -1,5 +1,5 @@
 # Activity: *Sign Up Page*
-**Archivo:**  [*signup_page.dart*  ]()
+**Archivo:**  [*signup_page.dart*  ](../../lib/pages/singup_page.dart)
 **Clase:**  *SigUpPage*  
 **Widget:**  *Stateful* 
 ## Funcionalidad
@@ -17,7 +17,7 @@ Cambia la variable que almacena el rol a registrar, además de actualizar el wid
 - **cambiarCarreraDepto**
 Asigna el valor tomado por la selección de carrera o departamento.
 - **verificarFormulario**
-Verifica el formulario realizando una evaluación de los campos si es que están vacíos, luego se realiza la llamada en una instancia de [Auth]() para hacer el registro del usuario en el *backend* teniendo los siguientes escenarios:
+Verifica el formulario realizando una evaluación de los campos si es que están vacíos, luego se realiza la llamada en una instancia de [Auth](../backend%20docs/Auth.md) para hacer el registro del usuario en el *backend* teniendo los siguientes escenarios:
 	- **Sí falla el registro:** Se notifica el error mediante un *Snackbar*.
 	- **Sí no hay errores:** Se notifica el registro exitoso y navega a la actividad de iniciar sesión ([Login Page]()).
 <!--stackedit_data:

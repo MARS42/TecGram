@@ -1,5 +1,5 @@
 # Backend: *Session*
-**Archivo:**  [*session.dart*]()
+**Archivo:**  [*session.dart*](../../lib/session/session.dart)
 **Clase:**  *Session*
 **Widget:** *No*
 ## Funcionalidad
