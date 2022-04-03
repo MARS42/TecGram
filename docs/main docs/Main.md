@@ -1,5 +1,5 @@
 # Fragment: *Messages View*
-**Archivo:**  [*main.dart*]()
+**Archivo:**  [*main.dart*](../../lib/pages/main_page.dart)
 **Clase:**  *MyApp*
 **Widget:** *Stateless*
 ## Funcionalidad
