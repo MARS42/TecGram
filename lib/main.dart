@@ -3,9 +3,9 @@ import 'package:flutter/services.dart';
 import 'package:tecgram_app/pages/main_page.dart';
 import 'package:tecgram_app/pages/login_page.dart';
 import 'package:tecgram_app/pages/splash_page.dart';
+import 'package:tecgram_app/pages/concentric_transition.dart';
 
 void main() {
-
   WidgetsFlutterBinding.ensureInitialized();
   SystemChrome.setPreferredOrientations(
       [DeviceOrientation.portraitUp, DeviceOrientation.portraitDown]);
@@ -22,6 +22,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Flutter Demo',
       theme: ThemeData(primarySwatch: Colors.indigo),
+      debugShowCheckedModeBanner: false,
 
       //Pantalla por defecto al abrir la aplicación
       home: const SplashPage(),
@@ -30,6 +31,9 @@ class MyApp extends StatelessWidget {
       routes: {
         //Ruta a la vista de login
         'login': (BuildContext context) => const LoginPage(),
+
+        'concentrictransition': (BuildContext context) =>
+            const ConcentricTransition(),
 
         //Ruta a la vista de home
         'main': (BuildContext context) => const MainPage(),
