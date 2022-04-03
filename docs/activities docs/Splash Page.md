@@ -1,7 +1,11 @@
 # Activity: *Splash Page*
+
 **Archivo:** [*splash_page.dart*](../../lib/pages/splash_page.dart)
+
 **Clase:** *SplashPage*
+
 **Widget**: *Stateful*
+
 ## Funcionalidad
 Actividad que realiza una verificación de sesión local almacenada en el dispositivo con dos posibles resultados:
 - **Sí hay una sesión almacenada:** Navega a la actividad principal ([Main Page](Main%20Page.md)).

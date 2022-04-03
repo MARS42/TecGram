@@ -1,7 +1,11 @@
 # Activity: *Main Page*
+
 **Archivo:**  [*main_page.dart* ](../../lib/pages/main_page.dart)
+
 **Clase:**  *MainPage*  
+
 **Widget:**  *Stateful*  
+
 ## Funcionalidad
 Actividad principal de la aplicación.
 Muestra todas las acciones principales que se pueden realizar, además de mostrar los *fragments* de las vistas:

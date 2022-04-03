@@ -1,7 +1,10 @@
 # Fragment: *Home View*
 **Archivo:**  [*campoTexto.dart*](../../lib/pages/widgets/campoTexto.dart)
+
 **Clase:**  *CampoTexto*
+
 **Widget:** *Stateful*
+
 ## Funcionalidad
 Este widget/fragment permite crear un campo de texto dados algunos parámetros opcionales:
 

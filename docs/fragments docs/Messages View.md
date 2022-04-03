@@ -1,7 +1,10 @@
 # Fragment: *Messages View*
 **Archivo:**  [*messages_view.dart*](../../lib/pages/home/messages_view.dart)
+
 **Clase:**  *MessagesPage*
+
 **Widget:** *Stateful*
+
 ## Funcionalidad
 Fragmento que proporciona una vista con los chats del usuario en forma de listado vertical.
 También ofrece la búsqueda de chats o contactos para hacer una nueva conversación.

@@ -1,7 +1,11 @@
 # Activity: *Login Page*
+
 **Archivo:**  [*login_page.dart*](../../lib/pages/login_page.dart)
+
 **Clase:**  *LoginPage*
+
 **Widget:** *Stateful*
+
 ## Funcionalidad
 Actividad que muestra un formulario de dos campos:
 - **Correo**

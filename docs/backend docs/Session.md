@@ -1,7 +1,11 @@
 # Backend: *Session*
+
 **Archivo:**  [*session.dart*](../../lib/session/session.dart)
+
 **Clase:**  *Session*
+
 **Widget:** *No*
+
 ## Funcionalidad
 Realiza las operaciones de almacenamiento local de una sesión guardada de usuario de forma asíncrona.
 ## Métodos

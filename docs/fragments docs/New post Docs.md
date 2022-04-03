@@ -1,6 +1,8 @@
 # Fragment: *New post View*
 **Archivo:**  [*new_post_view.dart*]()
+
 **Clase:**  *NewPost*
+
 **Widget:** *Stateful*
 ## Funcionalidad
 

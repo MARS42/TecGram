@@ -10,7 +10,7 @@ Actividades que se llevan a cabo en la aplicación.
  - [Splash Page](docs/activities%20docs/Splash%20Page.md)
  - [Login / Sign In Page](docs/activities%20docs/Login%20Page.md)
  - [Register / Sign Up](docs/activities%20docs/Sign%20Up%20Page.md)
- - [Main Page]()
+ - [Main Page](docs/activities%20docs/Main%20Page.md)
 
 ## Fragments
 Fragments utilizados en las actividades.

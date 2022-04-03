@@ -1,7 +1,10 @@
 # Fragment: *Home View*
 **Archivo:**  [*home_page.dart*]()
+
 **Clase:**  *HomePage*
+
 **Widget:** *Stateful*
+
 ## Funcionalidad
 
 ## Métodos

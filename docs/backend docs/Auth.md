@@ -1,7 +1,11 @@
 # Backend: *Auth*
+
 **Archivo:**  [*auth.dart*](../../lib/api/auth.dart)
+
 **Clase:**  *auth*
+
 **Widget:** *No*
+
 ## Funcionalidad
 Clase que realiza las operaciones y se comunica con el servicio backend de la aplicación.
 Haciendo el registro e inicio de sesión mediante peticiones *POST HTTP*.

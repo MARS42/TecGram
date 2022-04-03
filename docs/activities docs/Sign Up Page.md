@@ -1,7 +1,11 @@
 # Activity: *Sign Up Page*
+
 **Archivo:**  [*signup_page.dart*  ](../../lib/pages/singup_page.dart)
+
 **Clase:**  *SigUpPage*  
+
 **Widget:**  *Stateful* 
+
 ## Funcionalidad
 Actividad que realiza el registro de un nuevo usuario en la aplicación.
 Consiste en una serie de campos:
