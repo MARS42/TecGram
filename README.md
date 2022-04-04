@@ -17,7 +17,7 @@ Fragments utilizados en las actividades.
  - [Home View](docs/fragments%20docs/Home%20View.md)
  - [Account View](docs/fragments%20docs/Account%20View.md)
  - [Messages View](docs/fragments%20docs/Messages%20View.md)
- - [New post View](docs/fragments%20docs/New%20post%20Docs.md)
+ - [Upload Photo](docs/fragments%20docs/New%20post%20Docs.md)
  - [Campo Texto](docs/fragments%20docs/Campo%20Texto.md)
 
 ## Conexión con backend
