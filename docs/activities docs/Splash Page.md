@@ -14,7 +14,7 @@ Actividad que realiza una verificación de sesión local almacenada en el dispos
 Mientas realiza la verificación muestra un widget que representa carga *CupertinoActivityIndicator*.
 ## Métodos
 - **CheckSession - *async***
-Realiza el proceso de verificación de la sesión mediante una instancia de la clase [Session](../backend%20docs/Session.md) arrojando los dos posibles escenarios mencionados.
+Realiza el proceso de verificación de la sesión local guardada en el dispositivo mediante una instancia de la clase [Session](../backend%20docs/Session.md) arrojando los dos posibles escenarios mencionados.
 <!--stackedit_data:
 eyJoaXN0b3J5IjpbMTM3MjI2Njc5LC00NTEwODcwNTksLTU1OT
 EzMDg0MCwxNjc4NzkxODFdfQ==
