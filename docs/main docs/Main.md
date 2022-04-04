@@ -1,4 +1,4 @@
-# Fragment: *Messages View*
+# Clase principal: *Main*
 **Archivo:**  [*main.dart*](../../lib/pages/main_page.dart)
 
 **Clase:**  *MyApp*
