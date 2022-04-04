@@ -5,7 +5,7 @@
 
 **Widget:** *Stateful*
 ## Funcionalidad
-
+Este fragmento tiene la funcionalidad de mostrar todas las fotos que tienes en tu galería para poder así seleccionar una fotografía y posteriormente subirla 
 ## Métodos
 
 <!--stackedit_data:
